@@ -59,7 +59,6 @@ class StationDataProvider {
         'Authorization': 'Bearer $token'
       },
     );
-    print('error in deleteStation=> ${jsonDecode(response.body).message}');
     if (response.statusCode != 204) {
       throw Exception('error deleting station');
     }
