@@ -9,4 +9,8 @@ class AuthRepo {
   Future<Auth> loginUser(Auth auth) async {
     return authDataProvider.loginUser(auth);
   }
+
+  Future<Auth> registerUser(Auth auth) async {
+    return authDataProvider.registerUser(auth);
+  }
 }

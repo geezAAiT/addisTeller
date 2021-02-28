@@ -7,7 +7,7 @@ class AuthState extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginInitState extends AuthState {}
+class FormInitState extends AuthState {}
 
 class LoginLoadingState extends AuthState {}
 
@@ -23,6 +23,28 @@ class AdminLoginSucessState extends AuthState {
 class LoginErrorState extends AuthState {
   final String message;
   LoginErrorState({this.message});
+  @override
+  List<Object> get props => [message];
+}
+
+class RegisterLoadingState extends AuthState {}
+
+class UserRegisterSucessState extends AuthState {}
+
+class RegisterErrorState extends AuthState {
+  final String message;
+  RegisterErrorState({this.message});
+  @override
+  List<Object> get props => [message];
+}
+
+class UpdateLoadingState extends AuthState {}
+
+class UserUpdateSucessState extends AuthState {}
+
+class UpdateErrorState extends AuthState {
+  final String message;
+  UpdateErrorState({this.message});
   @override
   List<Object> get props => [message];
 }

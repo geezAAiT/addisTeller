@@ -8,17 +8,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepo authRepo;
   AuthBloc({@required this.authRepo})
       : assert(authRepo != null),
-        super(LoginInitState());
+        super(FormInitState());
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if (event is StartEvent)
-      yield LoginInitState();
-    else if (event is LoginButtonPressed) {
+    if (event is StartEvent) yield FormInitState();
+    if (event is LoginButtonPressed) {
       yield LoginLoadingState();
       try {
         final user = await authRepo.loginUser(event.auth);
+        print('useris $user');
         if (user.isAdmin) {
           pref.setString("token", user.token);
           pref.setBool("isAdmin", user.isAdmin);
@@ -31,7 +31,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           yield UserLoginSucessState();
         }
       } catch (e) {
-        yield LoginErrorState(message: '$e');
+        yield LoginErrorState(message: '${e.message}');
+      }
+    }
+    if (event is RegisterButtonPressed) {
+      yield RegisterLoadingState();
+      try {
+        final user = await authRepo.registerUser(event.auth);
+        yield UserRegisterSucessState();
+      } catch (e) {
+        yield LoginErrorState(message: '${e.message}');
       }
     }
   }

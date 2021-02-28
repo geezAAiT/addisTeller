@@ -20,3 +20,41 @@ class LoginButtonPressed extends AuthEvent {
   @override
   String toString() => 'User $auth loggedIN';
 }
+
+class RegisterButtonPressed extends AuthEvent {
+  final Auth auth;
+  RegisterButtonPressed({this.auth});
+
+  @override
+  List<Object> get props => [auth];
+
+  @override
+  String toString() => 'User $auth Registered';
+}
+
+class UserSelfUpdate extends AuthEvent {
+  final Auth auth;
+  UserSelfUpdate({this.auth});
+  @override
+  List<Object> get props => [auth];
+  @override
+  String toString() => 'User $auth Update';
+}
+
+class UserUpdate extends AuthEvent {
+  final Auth auth;
+  UserUpdate({this.auth});
+  @override
+  List<Object> get props => [auth];
+  @override
+  String toString() => 'User $auth Registered';
+}
+
+class UserDelete extends AuthEvent {
+  final Auth auth;
+  UserDelete({this.auth});
+  @override
+  List<Object> get props => [auth];
+  @override
+  String toString() => 'User $auth Registered';
+}
