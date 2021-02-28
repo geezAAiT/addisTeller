@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield LoginLoadingState();
       try {
         final user = await authRepo.loginUser(event.auth);
+        print('useris $user');
         if (user.isAdmin) {
           pref.setString("token", user.token);
           pref.setBool("isAdmin", user.isAdmin);

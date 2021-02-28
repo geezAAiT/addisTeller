@@ -1,4 +1,8 @@
 import 'package:addis_teller_app/auth/auth.dart';
+import 'package:addis_teller_app/multi.dart';
+import 'package:addis_teller_app/post/bloc/bloc.dart';
+import 'package:addis_teller_app/post/data_provider/data_provider.dart';
+import 'package:addis_teller_app/post/repository/post_repository.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/station/screens/routes.dart';
@@ -21,18 +25,25 @@ Future<void> main() async {
       AuthRepo(authDataProvider: AuthDataProvider(httpClient: http.Client()));
   final StationRepository stationRepository = StationRepository(
       stationDataProvider: StationDataProvider(httpClient: http.Client()));
+  final PostRepository postRepository =
+      PostRepository(postProvider: PostDataProvider(httpClient: http.Client()));
   runApp(AddisTeller(
     authRepo: authRepo,
     stationRepository: stationRepository,
+    postRepository: postRepository,
   ));
 }
 
 class AddisTeller extends StatelessWidget {
-  AddisTeller({@required this.authRepo, @required this.stationRepository})
+  AddisTeller(
+      {@required this.authRepo,
+      @required this.stationRepository,
+      @required this.postRepository})
       : assert(authRepo != null),
         assert(stationRepository != null);
   final AuthRepo authRepo;
   final StationRepository stationRepository;
+  final PostRepository postRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +52,7 @@ class AddisTeller extends StatelessWidget {
         RepositoryProvider<AuthRepo>(create: (context) => authRepo),
         RepositoryProvider<StationRepository>(
             create: (context) => stationRepository),
+        RepositoryProvider(create: (context) => postRepository),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -51,6 +63,9 @@ class AddisTeller extends StatelessWidget {
               create: (context) =>
                   StationBloc(stationRepository: stationRepository)
                     ..add(StationLoad())),
+          BlocProvider(
+              create: (context) =>
+                  PostBloc(postRepository: postRepository)..add(PostLoad()))
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

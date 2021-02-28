@@ -1,4 +1,6 @@
 import 'package:addis_teller_app/auth/screens/login.dart';
+import 'package:addis_teller_app/post/bloc/post_bloc.dart';
+import 'package:addis_teller_app/post/bloc/post_event.dart';
 import 'package:addis_teller_app/station/screens/station_detail.dart';
 import 'package:addis_teller_app/station/station.dart';
 import 'package:addis_teller_app/station/widgets/createAndUpdate.dart';
@@ -11,6 +13,8 @@ class Homepage extends StatefulWidget {
   @override
   _HomepageState createState() => _HomepageState();
 }
+
+String userID;
 
 class _HomepageState extends State<Homepage> {
   Radius borderRadius = Radius.circular(15);
@@ -28,6 +32,8 @@ class _HomepageState extends State<Homepage> {
               SharedPreferences preferences =
                   await SharedPreferences.getInstance();
               preferences.clear();
+              print(
+                  "${preferences.getString('id')} and ${preferences.getString('token')}");
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Login()));
             },
@@ -75,7 +81,12 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                     ListTile(
-                      onTap: () {
+                      onTap: () async {
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        userID = pref.getString("id");
+                        BlocProvider.of<PostBloc>(context).add(
+                            StationPostLoad(stationID: stations[index].id));
                         Navigator.pushNamed(context, StationDetail.routeName,
                             arguments: stations[index]);
                       },
