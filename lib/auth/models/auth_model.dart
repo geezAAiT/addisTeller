@@ -19,7 +19,7 @@ class Auth extends Equatable {
 
   factory Auth.fromJson(Map<String, dynamic> json) {
     return Auth(
-        id: json['_id'],
+        id: json['id'],
         name: json['name'],
         email: json['email'],
         token: json['token'],

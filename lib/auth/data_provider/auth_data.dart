@@ -11,7 +11,7 @@ class AuthDataProvider {
 
   Future<Auth> loginUser(Auth auth) async {
     final response = await httpClient.post(
-      Uri.http('192.168.1.103:6002', '/users/login'),
+      Uri.http('10.6.206.211:6002', '/users/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -20,7 +20,6 @@ class AuthDataProvider {
     );
 
     if (response.statusCode == 200) {
-      debugPrint('${response.body}');
       return Auth.fromJson(jsonDecode(response.body));
     } else
       throw Exception(response.body);
