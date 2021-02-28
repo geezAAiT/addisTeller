@@ -90,6 +90,7 @@ class _HomepageState extends State<Homepage> {
                           ),
                           // ),
                         ),
+<<<<<<< HEAD
                         ListTile(
                           onTap: () async {
                             SharedPreferences pref =
@@ -118,6 +119,32 @@ class _HomepageState extends State<Homepage> {
                               }),
                         ),
                       ],
+=======
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () async {
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        userID = pref.getString("id");
+                        BlocProvider.of<PostBloc>(context).add(
+                            StationPostLoad(stationID: stations[index].id));
+                        Navigator.pushNamed(context, StationDetail.routeName,
+                            arguments: stations[index]);
+                      },
+                      title: Text('${stations[index].name}'),
+                      subtitle: Text('${stations[index].latLong}'),
+                      trailing: IconButton(
+                          icon: Icon(Icons.update),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => AddAndUpdateField(
+                                      edit: true,
+                                      station: stations[index],
+                                    ));
+                          }),
+>>>>>>> b96b5064529db5d80a9c6809a407c595c8a79ae9
                     ),
                   ),
                 );

@@ -1,5 +1,8 @@
 import 'package:addis_teller_app/auth/screens/login.dart';
+<<<<<<< HEAD
 import 'package:addis_teller_app/auth/screens/register.dart';
+=======
+>>>>>>> b96b5064529db5d80a9c6809a407c595c8a79ae9
 import 'package:addis_teller_app/multi.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/screens/station_detail.dart';

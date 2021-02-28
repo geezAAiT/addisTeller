@@ -29,6 +29,7 @@ class Station extends Equatable {
   @override
   String toString() =>
       'Station { id: $id, name: $name, latLong: $latLong, stations: $stations, posts: $posts }';
+<<<<<<< HEAD
 }
 
 @immutable
@@ -48,4 +49,6 @@ class Nearby extends Equatable {
 
   @override
   String toString() => 'Station { station: $station, distance: $distance }';
+=======
+>>>>>>> b96b5064529db5d80a9c6809a407c595c8a79ae9
 }
