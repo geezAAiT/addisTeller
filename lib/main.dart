@@ -4,9 +4,11 @@ import 'package:addis_teller_app/post/bloc/bloc.dart';
 import 'package:addis_teller_app/post/data_provider/data_provider.dart';
 import 'package:addis_teller_app/post/repository/post_repository.dart';
 import 'package:addis_teller_app/station/bloc/nearby_bloc.dart';
+import 'package:addis_teller_app/station/screens/admin_homepage.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/station/screens/routes.dart';
+import 'package:addis_teller_app/station/screens/user_homepage.dart';
 import 'package:addis_teller_app/station/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +19,13 @@ import 'auth/screens/register.dart';
 import 'blocObservor.dart';
 
 String token;
+bool isAdmin;
 Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preference = await SharedPreferences.getInstance();
   token = preference.getString('token');
+  isAdmin = preference.getBool('isAdmin');
 
   final AuthRepo authRepo =
       AuthRepo(authDataProvider: AuthDataProvider(httpClient: http.Client()));
@@ -79,7 +83,11 @@ class AddisTeller extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          initialRoute: token != null ? Homepage.routeName : Register.routeName,
+          initialRoute: token != null && isAdmin
+              ? AdminHomepage.routeName
+              : token != null && !isAdmin
+                  ? UserPage.routeName
+                  : Register.routeName,
           onGenerateRoute: StationAppRoute.generateRoute,
         ),
       ),

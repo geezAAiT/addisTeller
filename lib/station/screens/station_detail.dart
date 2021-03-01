@@ -47,6 +47,8 @@ class _StationDetailState extends State<StationDetail>
     super.dispose();
   }
 
+  TextEditingController editingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -306,11 +308,11 @@ class _StationDetailState extends State<StationDetail>
                           autofocus: false,
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter course code';
+                              return 'Write station\'s status';
                             }
                             return null;
                           },
-                          decoration: InputDecoration(labelText: 'name'),
+                          decoration: InputDecoration(labelText: 'body'),
                           onSaved: (value) {
                             setState(() {
                               post["body"] = value;
@@ -330,8 +332,8 @@ class _StationDetailState extends State<StationDetail>
                             BlocProvider.of<PostBloc>(context).add(event);
                           }
                         },
-                        label: Text('SAVE'),
-                        icon: Icon(Icons.save),
+                        label: Text('post'),
+                        icon: Icon(Icons.post_add),
                       ),
                     ],
                   ),
@@ -373,9 +375,58 @@ class _StationDetailState extends State<StationDetail>
                                       onTap: () {
                                         showModalBottomSheet(
                                             context: context,
-                                            builder: (context) => Text("DS"));
+                                            builder: (context) => Column(
+                                                  children: [
+                                                    TextFormField(
+                                                        autofocus: false,
+                                                        initialValue:
+                                                            posts[index].body,
+                                                        validator: (value) {
+                                                          if (value.isEmpty) {
+                                                            return 'Write station\'s status';
+                                                          }
+                                                          return null;
+                                                        },
+                                                        decoration:
+                                                            InputDecoration(
+                                                                labelText:
+                                                                    'body'),
+                                                        onSaved: (value) {
+                                                          setState(() {
+                                                            post["body"] =
+                                                                value;
+                                                          });
+                                                        }),
+                                                    ElevatedButton.icon(
+                                                      onPressed: () {
+                                                        final form = _formKey
+                                                            .currentState;
+                                                        if (form.validate()) {
+                                                          form.save();
+                                                          final PostEvent
+                                                              event =
+                                                              PostUpdate(
+                                                            Post(
+                                                                body: post[
+                                                                    "body"],
+                                                                id: posts[index]
+                                                                    .id),
+                                                          );
+
+                                                          BlocProvider.of<
+                                                                      PostBloc>(
+                                                                  context)
+                                                              .add(event);
+                                                        }
+                                                      },
+                                                      label:
+                                                          Text('update post'),
+                                                      icon: Icon(Icons.update),
+                                                    ),
+                                                  ],
+                                                ));
                                       },
-                                      child: Text("ed"),
+                                      child: Text("edit"),
                                     ))
                                   ];
                                 },

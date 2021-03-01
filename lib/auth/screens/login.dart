@@ -1,7 +1,9 @@
 import 'package:addis_teller_app/auth/auth.dart';
 import 'package:addis_teller_app/auth/screens/register.dart';
 import 'package:addis_teller_app/auth/widgets/form.dart';
+import 'package:addis_teller_app/station/screens/admin_homepage.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
+import 'package:addis_teller_app/station/screens/user_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,7 +90,7 @@ class Login extends StatelessWidget {
           if (state is AdminLoginSucessState)
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => Homepage()),
+                MaterialPageRoute(builder: (context) => AdminHomepage()),
                 (route) => false);
           if (state is LoginErrorState) {
             Scaffold.of(context)

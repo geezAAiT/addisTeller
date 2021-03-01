@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPage extends StatelessWidget {
+  static String routeName = '/userpage';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
