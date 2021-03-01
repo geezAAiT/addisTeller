@@ -8,15 +8,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepo authRepo;
   AuthBloc({@required this.authRepo})
       : assert(authRepo != null),
-        super(LoginInitState());
+        super(FormInitState());
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if (event is StartEvent)
-      yield LoginInitState();
-    else if (event is LoginButtonPressed) {
-      yield LoginLoadingState();
+    if (event is StartEvent) yield FormInitState();
+    if (event is LoginButtonPressed) {
+      yield LoadingState();
       try {
         final user = await authRepo.loginUser(event.auth);
         print('useris $user');
@@ -32,7 +31,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           yield UserLoginSucessState();
         }
       } catch (e) {
-        yield LoginErrorState(message: '$e');
+        yield LoginErrorState(message: '${e.message}');
+      }
+    }
+    if (event is RegisterButtonPressed) {
+      yield LoadingState();
+      try {
+        final user = await authRepo.registerUser(event.auth);
+        yield UserRegisterSucessState();
+      } catch (e) {
+        yield LoginErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UsersLoad) {
+      yield LoadingState();
+      try {
+        final users = await authRepo.getUsers();
+        yield UsersLoadSucessState(users);
+      } catch (e) {
+        yield UsersLoadErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UserUpdate) {
+      yield LoadingState();
+      try {
+        await authRepo.updateUser(event.auth);
+        yield UserUpdateSucessState();
+      } catch (e) {
+        yield UserSelfUpdateErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UserSelfUpdate) {
+      yield LoadingState();
+      try {
+        await authRepo.updateSelf(event.auth);
+        yield UserSelfUpdateSucessState();
+      } catch (e) {
+        yield UserSelfUpdateErrorState(message: '${e.message}');
       }
     }
   }

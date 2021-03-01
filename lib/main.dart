@@ -3,6 +3,7 @@ import 'package:addis_teller_app/multi.dart';
 import 'package:addis_teller_app/post/bloc/bloc.dart';
 import 'package:addis_teller_app/post/data_provider/data_provider.dart';
 import 'package:addis_teller_app/post/repository/post_repository.dart';
+import 'package:addis_teller_app/station/bloc/nearby_bloc.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/station/screens/routes.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'auth/screens/register.dart';
 import 'blocObservor.dart';
 
 String token;
@@ -65,7 +67,11 @@ class AddisTeller extends StatelessWidget {
                     ..add(StationLoad())),
           BlocProvider(
               create: (context) =>
-                  PostBloc(postRepository: postRepository)..add(PostLoad()))
+                  PostBloc(postRepository: postRepository)..add(PostLoad())),
+          BlocProvider(
+              create: (context) => NearbyBloc(
+                  stationRepository: stationRepository)
+                ..add(NearbyLoad(currentCoordinate: '9.044559, 38.7580017')))
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -73,7 +79,7 @@ class AddisTeller extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          initialRoute: token != null ? Homepage.routeName : Login.routeName,
+          initialRoute: token != null ? Homepage.routeName : Register.routeName,
           onGenerateRoute: StationAppRoute.generateRoute,
         ),
       ),

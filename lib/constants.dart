@@ -1,3 +1,3 @@
 class Constants {
-  static String baseUrl = 'http://10.6.206.211:6002';
+  static String baseUrl = 'http://192.168.122.1:5000';
 }

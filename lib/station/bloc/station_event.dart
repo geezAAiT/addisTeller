@@ -12,6 +12,15 @@ class StationLoad extends StationEvent {
   List<Object> get props => [];
 }
 
+class NearbyLoad extends StationEvent {
+  NearbyLoad({this.currentCoordinate});
+
+  final String currentCoordinate;
+
+  @override
+  List<Object> get props => [currentCoordinate];
+}
+
 class StationCreate extends StationEvent {
   final Station station;
 
@@ -46,4 +55,12 @@ class StationDelete extends StationEvent {
 
   @override
   toString() => 'station Deleted {station: $station}';
+}
+
+class StationSearch extends StationEvent {
+  final String search;
+  StationSearch({this.search});
+
+  @override
+  List<Object> get props => [search];
 }

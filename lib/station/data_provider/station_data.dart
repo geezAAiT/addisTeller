@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StationDataProvider {
-  // final _baseUrl = 'http://192.168.122.1:6002';
+  // final _baseUrl = 'http://192.168.122.1:5000';
   final http.Client httpClient;
 
   StationDataProvider({@required this.httpClient}) : assert(httpClient != null);
@@ -22,7 +22,7 @@ class StationDataProvider {
   Future<Station> createStation(Station station) async {
     final token = await pref();
     final response = await httpClient.post(
-      Uri.http('192.168.122.1:6002', '/stations'),
+      Uri.http('192.168.122.1:5000', '/stations'),
       headers: <String, String>{
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         HttpHeaders.authorizationHeader: 'Bearer $token'
@@ -88,6 +88,40 @@ class StationDataProvider {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update station.');
+    }
+  }
+
+  Future<List<Nearby>> getNearbyStations(String currentCoordinate) async {
+    final token = await pref();
+    final response = await httpClient.get(
+        '${Constants.baseUrl}/stations/nearby/$currentCoordinate',
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
+          HttpHeaders.authorizationHeader: 'Bearer $token'
+        });
+    print('${response.body}');
+    if (response.statusCode == 200) {
+      final nearbys = jsonDecode(response.body) as List;
+      print("nearby stations:= $nearbys");
+      return nearbys.map((nearby) => Nearby.fromJson(nearby)).toList();
+    } else {
+      throw Exception('${jsonDecode(response.body)}');
+    }
+  }
+
+  Future<List<Station>> searchStations(String search) async {
+    final token = await pref();
+    final response = await httpClient
+        .get('${Constants.baseUrl}/stations/search/$search', headers: {
+      HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: 'Bearer $token'
+    });
+    if (response.statusCode == 200) {
+      final searchs = jsonDecode(response.body) as List;
+      // print("nearby stations:= $nearbys");
+      return searchs.map((search) => Station.fromJson(search)).toList();
+    } else {
+      throw Exception('${jsonDecode(response.body)}');
     }
   }
 }

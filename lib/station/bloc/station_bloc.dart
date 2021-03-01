@@ -51,5 +51,25 @@ class StationBloc extends Bloc<StationEvent, StationState> {
         yield StationOperationFailure();
       }
     }
+    if (event is NearbyLoad) {
+      yield NearbyLoading();
+      try {
+        final nearbys =
+            await stationRepository.getNearbyStations(event.currentCoordinate);
+        print(nearbys);
+        yield NearbysLoadSuccess(nearbys);
+      } catch (e) {
+        yield NearbyOperationFailure(message: '$e');
+      }
+    }
+    if (event is StationSearch) {
+      yield SearchingState();
+      try {
+        final stations = await stationRepository.searchStation(event.search);
+        yield SearchSuccessState(stations);
+      } catch (e) {
+        yield SearchFailureState(message: '$e');
+      }
+    }
   }
 }

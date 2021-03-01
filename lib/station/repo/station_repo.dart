@@ -15,11 +15,19 @@ class StationRepository {
     return await stationDataProvider.getStations();
   }
 
+  Future<List<Nearby>> getNearbyStations(String currentCoordinate) async {
+    return await stationDataProvider.getNearbyStations(currentCoordinate);
+  }
+
   Future<void> updateStation(Station station) async {
     await stationDataProvider.updateStation(station);
   }
 
   Future<void> deleteStation(String id) async {
     await stationDataProvider.deleteStation(id);
+  }
+
+  Future<List<Station>> searchStation(String search) async {
+    await stationDataProvider.searchStations(search);
   }
 }

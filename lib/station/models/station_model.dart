@@ -30,3 +30,22 @@ class Station extends Equatable {
   String toString() =>
       'Station { id: $id, name: $name, latLong: $latLong, stations: $stations, posts: $posts }';
 }
+
+@immutable
+class Nearby extends Equatable {
+  Nearby({this.station, this.distance});
+
+  final Map<String, dynamic> station;
+  final String distance;
+
+  @override
+  List<Object> get props => [station, distance];
+
+  factory Nearby.fromJson(Map<String, dynamic> json) {
+    return Nearby(
+        station: json['station'], distance: json['distance'].toString());
+  }
+
+  @override
+  String toString() => 'Station { station: $station, distance: $distance }';
+}
