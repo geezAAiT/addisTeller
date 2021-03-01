@@ -16,7 +16,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("admin"),
@@ -38,7 +38,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
       body: Homepage(
         trailing: true,
       ),
-      bottomSheet: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
               isScrollControlled: true,
@@ -59,7 +59,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
         },
         child: Icon(Icons.add),
       ),
-      drawer: Navigation_Drawer(),
+      drawer: NavigationDrawer(),
     );
   }
 }

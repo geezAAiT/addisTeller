@@ -10,6 +10,10 @@ class AuthRepo {
     return authDataProvider.loginUser(auth);
   }
 
+  Future<Auth> getUserByID(String id) async {
+    return authDataProvider.getUserByID(id);
+  }
+
   Future<Auth> registerUser(Auth auth) async {
     return authDataProvider.registerUser(auth);
   }
@@ -20,6 +24,10 @@ class AuthRepo {
 
   Future<void> updateUser(Auth auth) async {
     return authDataProvider.updateUser(auth);
+  }
+
+  Future<void> deleteUser(String id) async {
+    return authDataProvider.deleteUser(id);
   }
 
   Future<List<Auth>> getUsers() async {

@@ -9,7 +9,7 @@ class Post extends Equatable {
     @required this.body,
   });
   final String id, body;
-  Map<String, dynamic> user;
+  final Map<String, dynamic> user;
 
   @override
   List<Object> get props => [id, body, user];

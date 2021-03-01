@@ -44,18 +44,27 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (event is PostUpdate) {
       try {
         await postRepository.updatePost(event.post);
-        final posts = await postRepository.getPosts();
-        yield PostLoadSuccess(posts);
+        final posts = await postRepository.getStationPosts(event.stationID);
+        yield StationPostsLoadSuccess(posts);
       } catch (e) {
         yield PostOperationFailure(message: "$e");
       }
     }
 
-    if (event is PostDelete) {
+    if (event is StationPostDelete) {
       try {
         await postRepository.deletePost(event.post.id);
         final posts = await postRepository.getStationPosts(event.stationID);
         yield StationPostsLoadSuccess(posts);
+      } catch (e) {
+        yield PostOperationFailure(message: "$e");
+      }
+    }
+    if (event is PostDelete) {
+      try {
+        await postRepository.deletePost(event.post.id);
+        final posts = await postRepository.getPosts();
+        yield PostLoadSuccess(posts);
       } catch (e) {
         yield PostOperationFailure(message: "$e");
       }

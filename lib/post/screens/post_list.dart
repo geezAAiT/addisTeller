@@ -1,17 +1,15 @@
-import 'package:addis_teller_app/auth/screens/profile.dart';
-import 'package:addis_teller_app/auth/widgets/updateForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../post.dart';
 
-class UserList extends StatelessWidget {
-  static String routeName = '/usersList';
+class PostList extends StatelessWidget {
+  static String routeName = '/postsList';
   @override
   Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("UserList"),
+        title: Text("PostList"),
       ),
       body: BlocConsumer<PostBloc, PostState>(
         builder: (context, state) {

@@ -67,3 +67,11 @@ class UsersLoad extends AuthEvent {
   @override
   String toString() => 'Users $auth';
 }
+
+class LoggedInUser extends AuthEvent {
+  final String id;
+  LoggedInUser({this.id});
+  List<Object> get props => [id];
+  @override
+  String toString() => 'Logged In user $id';
+}

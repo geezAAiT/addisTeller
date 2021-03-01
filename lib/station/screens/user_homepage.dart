@@ -1,5 +1,6 @@
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
+import 'package:addis_teller_app/station/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,6 +27,7 @@ class UserPage extends StatelessWidget {
       body: Homepage(
         trailing: false,
       ),
+      drawer: NavigationDrawer(),
     );
   }
 }

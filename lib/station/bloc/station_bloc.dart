@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:addis_teller_app/station/station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +50,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
         final stations = await stationRepository.getStations();
         yield StationsLoadSuccess(stations);
       } catch (_) {
-        yield StationOperationFailure();
+        yield StationOperationFailure(message: "$e");
       }
     }
     if (event is NearbyLoad) {

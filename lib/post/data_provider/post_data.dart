@@ -29,7 +29,7 @@ class PostDataProvider {
     final token = await pref();
     final userID = await prefUser();
     final response = await httpClient.post(
-      Uri.http('192.168.122.1:5000', '/posts/$stationID'),
+      Uri.http('192.168.122.1:5002', '/posts/$stationID'),
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         HttpHeaders.authorizationHeader: 'Bearer $token'
@@ -113,7 +113,7 @@ class PostDataProvider {
       }),
     );
     if (response.statusCode != 200) {
-      throw Exception('Failed to update post.');
+      throw Exception('$jsonDecode(response.body)');
     }
   }
 }

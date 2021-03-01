@@ -1,12 +1,9 @@
 import 'package:addis_teller_app/auth/auth.dart';
-import 'package:addis_teller_app/multi.dart';
 import 'package:addis_teller_app/post/bloc/bloc.dart';
 import 'package:addis_teller_app/post/data_provider/data_provider.dart';
 import 'package:addis_teller_app/post/repository/post_repository.dart';
 import 'package:addis_teller_app/station/bloc/nearby_bloc.dart';
 import 'package:addis_teller_app/station/screens/admin_homepage.dart';
-import 'package:addis_teller_app/station/screens/homepage.dart';
-import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/station/screens/routes.dart';
 import 'package:addis_teller_app/station/screens/user_homepage.dart';
 import 'package:addis_teller_app/station/station.dart';

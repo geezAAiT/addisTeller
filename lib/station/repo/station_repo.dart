@@ -20,14 +20,14 @@ class StationRepository {
   }
 
   Future<void> updateStation(Station station) async {
-    await stationDataProvider.updateStation(station);
+    return await stationDataProvider.updateStation(station);
   }
 
   Future<void> deleteStation(String id) async {
-    await stationDataProvider.deleteStation(id);
+    return await stationDataProvider.deleteStation(id);
   }
 
-  Future<List<Station>> searchStation(String search) async {
-    await stationDataProvider.searchStations(search);
+  Future<List<StationFromSearch>> searchStation(String search) async {
+    return await stationDataProvider.searchStations(search);
   }
 }

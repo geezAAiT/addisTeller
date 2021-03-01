@@ -25,58 +25,25 @@ class AdminLoginSucessState extends AuthState {
   List<Object> get props => [auth];
 }
 
-class LoginErrorState extends AuthState {
-  final String message;
-  LoginErrorState({this.message});
-  @override
-  List<Object> get props => [message];
-}
-
 class UserRegisterSucessState extends AuthState {}
 
-class RegisterErrorState extends AuthState {
-  final String message;
-  RegisterErrorState({this.message});
-  @override
-  List<Object> get props => [message];
-}
-
-class UserUpdateSucessState extends AuthState {}
-
-class UserUpdateErrorState extends AuthState {
-  final String message;
-  UserUpdateErrorState({this.message});
-  @override
-  List<Object> get props => [message];
-}
-
-class UserSelfUpdateSucessState extends AuthState {}
-
-class UserSelfUpdateErrorState extends AuthState {
-  final String message;
-  UserSelfUpdateErrorState({this.message});
-  @override
-  List<Object> get props => [message];
-}
-
-class UserDeleteSucessState extends AuthState {}
-
-class UserDeleteErrorState extends AuthState {
-  final String message;
-  UserDeleteErrorState({this.message});
-  @override
-  List<Object> get props => [message];
-}
-
 class UsersLoadSucessState extends AuthState {
-  List<Auth> users;
+  final List<Auth> users;
   UsersLoadSucessState([this.users = const []]);
   List<Object> get props => [users];
 }
 
-class UsersLoadErrorState extends AuthState {
+class LoggedInUserSuccessState extends AuthState {
+  final Auth user;
+  LoggedInUserSuccessState({this.user});
+  List<Object> get props => [user];
+  @override
+  String toString() => 'Logged In user $user';
+}
+
+class AuthFailureState extends AuthState {
   final String message;
-  UsersLoadErrorState({this.message});
+  AuthFailureState({this.message});
   @override
   List<Object> get props => [message];
 }

@@ -5,17 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchForm extends StatelessWidget {
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+      padding: EdgeInsets.fromLTRB(20, 20, 10, 20),
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
                   padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -60,15 +62,17 @@ class SearchForm extends StatelessWidget {
             }
             if (state is SearchSuccessState) {
               final stations = state.stations;
+              print("search station:= $stations");
               return ListView.builder(
+                  shrinkWrap: true,
                   itemCount: stations.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: CircleAvatar(
                         child: Icon(Icons.car_rental),
                       ),
-                      title: Text(stations[index].name),
-                      subtitle: Text(stations[index].latLong),
+                      title: Text(stations[index].station["name"]),
+                      subtitle: Text(stations[index].station["latLong"]),
                     );
                   });
             }

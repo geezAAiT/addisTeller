@@ -22,7 +22,7 @@ class StationDataProvider {
   Future<Station> createStation(Station station) async {
     final token = await pref();
     final response = await httpClient.post(
-      Uri.http('192.168.122.1:5000', '/stations'),
+      Uri.http('192.168.122.1:5002', '/stations'),
       headers: <String, String>{
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         HttpHeaders.authorizationHeader: 'Bearer $token'
@@ -109,7 +109,7 @@ class StationDataProvider {
     }
   }
 
-  Future<List<Station>> searchStations(String search) async {
+  Future<List<StationFromSearch>> searchStations(String search) async {
     final token = await pref();
     final response = await httpClient
         .get('${Constants.baseUrl}/stations/search/$search', headers: {
@@ -118,8 +118,10 @@ class StationDataProvider {
     });
     if (response.statusCode == 200) {
       final searchs = jsonDecode(response.body) as List;
-      // print("nearby stations:= $nearbys");
-      return searchs.map((search) => Station.fromJson(search)).toList();
+      print("search stations:= $searchs");
+      return searchs
+          .map((search) => StationFromSearch.fromJson(search))
+          .toList();
     } else {
       throw Exception('${jsonDecode(response.body)}');
     }

@@ -34,6 +34,8 @@ dependencies:
   http: ^0.12.2
   shared_preferences: ^0.5.12+4
   multi_select_flutter: ^3.1.8
+  font_awesome_flutter: ^8.11.0
+  flutter_slidable: ^0.5.7
 
 
 dev_dependencies:

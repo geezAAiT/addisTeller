@@ -28,46 +28,71 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           pref.setString("token", user.token);
           pref.setBool("isAdmin", user.isAdmin);
           pref.setString("id", user.id);
-          yield UserLoginSucessState();
+          yield UserLoginSucessState(auth: user);
         }
       } catch (e) {
-        yield LoginErrorState(message: '${e.message}');
+        yield AuthFailureState(message: '${e.message}');
       }
     }
     if (event is RegisterButtonPressed) {
       yield LoadingState();
       try {
-        final user = await authRepo.registerUser(event.auth);
+        await authRepo.registerUser(event.auth);
+        final users = await authRepo.getUsers();
+        yield UsersLoadSucessState(users);
         yield UserRegisterSucessState();
       } catch (e) {
-        yield LoginErrorState(message: '${e.message}');
+        yield AuthFailureState(message: '${e.message}');
       }
     }
     if (event is UsersLoad) {
       yield LoadingState();
       try {
         final users = await authRepo.getUsers();
+        // print('user 1 : $users[0]');
+        print("on the user load bloc $users");
         yield UsersLoadSucessState(users);
       } catch (e) {
-        yield UsersLoadErrorState(message: '${e.message}');
+        yield AuthFailureState(message: '${e.message}');
       }
     }
     if (event is UserUpdate) {
       yield LoadingState();
       try {
         await authRepo.updateUser(event.auth);
-        yield UserUpdateSucessState();
+        final users = await authRepo.getUsers();
+        yield UsersLoadSucessState(users);
       } catch (e) {
-        yield UserSelfUpdateErrorState(message: '${e.message}');
+        yield AuthFailureState(message: '${e.message}');
       }
     }
     if (event is UserSelfUpdate) {
       yield LoadingState();
       try {
         await authRepo.updateSelf(event.auth);
-        yield UserSelfUpdateSucessState();
       } catch (e) {
-        yield UserSelfUpdateErrorState(message: '${e.message}');
+        yield AuthFailureState(message: '${e.message}');
+      }
+    }
+
+    if (event is UserDelete) {
+      yield LoadingState();
+      try {
+        await authRepo.deleteUser(event.auth.id);
+        final users = await authRepo.getUsers();
+        yield UsersLoadSucessState(users);
+      } catch (e) {
+        yield AuthFailureState(message: '${e.message}');
+      }
+    }
+
+    if (event is LoggedInUser) {
+      try {
+        final user = await authRepo.getUserByID(event.id);
+        print("loggedin state: $user");
+        yield LoggedInUserSuccessState(user: user);
+      } catch (e) {
+        yield AuthFailureState(message: '${e.message}');
       }
     }
   }

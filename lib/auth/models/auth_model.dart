@@ -18,14 +18,16 @@ class Auth extends Equatable {
   List<Object> get props => [id, email, password, token, name, isAdmin];
 
   factory Auth.fromJson(Map<String, dynamic> json) {
+    // print('auth model : $json');
     return Auth(
-        id: json['id'],
+        id: json['_id'],
         name: json['name'],
         email: json['email'],
-        token: json['token'],
-        isAdmin: json['isAdmin']);
+        isAdmin: json['isAdmin'],
+        token: json['token']);
   }
 
   @override
-  String toString() => 'Auth { id: $id, email: $email, password: $password}';
+  String toString() =>
+      'Auth { id: $id, email: $email, password: $password, isadmin:$isAdmin}';
 }

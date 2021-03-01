@@ -33,22 +33,34 @@ class PostCreate extends PostEvent {
 
 class PostUpdate extends PostEvent {
   final Post post;
-  const PostUpdate(this.post);
+  final String stationID;
+  const PostUpdate(this.post, this.stationID);
 
   @override
-  List<Object> get props => [post];
+  List<Object> get props => [post,stationID];
 
   @override
   String toString() => 'Post Updated {post: $post}';
 }
 
-class PostDelete extends PostEvent {
+class StationPostDelete extends PostEvent {
   final Post post;
   final String stationID;
-  const PostDelete({this.post, this.stationID});
+  const StationPostDelete({this.post, this.stationID});
 
   @override
   List<Object> get props => [post, stationID];
+
+  @override
+  toString() => 'Post Deleted {post: $post}';
+}
+
+class PostDelete extends PostEvent {
+  final Post post;
+  const PostDelete({this.post});
+
+  @override
+  List<Object> get props => [post];
 
   @override
   toString() => 'Post Deleted {post: $post}';
