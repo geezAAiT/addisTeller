@@ -1,6 +1,7 @@
 import 'package:addis_teller_app/main.dart';
 import 'package:addis_teller_app/post/bloc/bloc.dart';
 import 'package:addis_teller_app/post/post.dart';
+import 'package:addis_teller_app/station/screens/admin_homepage.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/station.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,7 @@ class _StationDetailState extends State<StationDetail>
                                 BlocProvider.of<StationBloc>(context)
                                     .add(StationDelete(this.widget.station));
                                 Navigator.of(context).pushNamedAndRemoveUntil(
-                                    Homepage.routeName, (route) => false);
+                                    AdminHomepage.routeName, (route) => false);
                               },
                             ),
                           ],
