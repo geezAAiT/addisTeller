@@ -1,7 +1,5 @@
 # Addis_teller_app
-
-A new Flutter project.
-
+being inspired by solving real life problems , we are delighted to participate in this big game changer app , by providing peoples transformation information , this will help our community to get better time consumption . In addis it is hard to to get bus stations and also location of places , so we tried to solve this by providing an app with major informations about loction of bus stations , taxi stations and location of places which make our travel easier and economical  . we are glad to participate in this project .  
 ## Getting Started
 
 This project is a starting point for a Flutter application.
@@ -15,9 +13,9 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
- ##Group Members          ##ID
-Amanuel Ewnetu       ATR/8353/10
-Benyam Zenebe        ATR/4788/10
-Fikir Muluken        ATR/2411/10
-Natnael Teferi       ATR/8648/10
-Sinishaw Tadele      ATR/9486/10
+## Group Members          ID
+Amanuel Ewnetu        ATR/8353/10
+Fikir Muluken         ATR/2411/10
+Benyam Zeneben        ATR/4788/10
+Natnael Teferi        ATR/8648/10
+Sinishaw Tadele       ATR/9486/10
