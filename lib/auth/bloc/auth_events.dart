@@ -38,7 +38,7 @@ class UserSelfUpdate extends AuthEvent {
   @override
   List<Object> get props => [auth];
   @override
-  String toString() => 'User $auth Update';
+  String toString() => 'User $auth Self-Updated';
 }
 
 class UserUpdate extends AuthEvent {
@@ -47,7 +47,7 @@ class UserUpdate extends AuthEvent {
   @override
   List<Object> get props => [auth];
   @override
-  String toString() => 'User $auth Registered';
+  String toString() => 'User $auth Updated';
 }
 
 class UserDelete extends AuthEvent {
@@ -56,5 +56,14 @@ class UserDelete extends AuthEvent {
   @override
   List<Object> get props => [auth];
   @override
-  String toString() => 'User $auth Registered';
+  String toString() => 'User $auth Deleted';
+}
+
+class UsersLoad extends AuthEvent {
+  final List<Auth> auth;
+  UsersLoad({this.auth});
+  @override
+  List<Object> get props => [auth];
+  @override
+  String toString() => 'Users $auth';
 }

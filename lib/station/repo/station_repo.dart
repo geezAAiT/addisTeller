@@ -26,4 +26,8 @@ class StationRepository {
   Future<void> deleteStation(String id) async {
     await stationDataProvider.deleteStation(id);
   }
+
+  Future<List<Station>> searchStation(String search) async {
+    await stationDataProvider.searchStations(search);
+  }
 }

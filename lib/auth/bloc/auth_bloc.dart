@@ -15,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     if (event is StartEvent) yield FormInitState();
     if (event is LoginButtonPressed) {
-      yield LoginLoadingState();
+      yield LoadingState();
       try {
         final user = await authRepo.loginUser(event.auth);
         print('useris $user');
@@ -35,12 +35,39 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     }
     if (event is RegisterButtonPressed) {
-      yield RegisterLoadingState();
+      yield LoadingState();
       try {
         final user = await authRepo.registerUser(event.auth);
         yield UserRegisterSucessState();
       } catch (e) {
         yield LoginErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UsersLoad) {
+      yield LoadingState();
+      try {
+        final users = await authRepo.getUsers();
+        yield UsersLoadSucessState(users);
+      } catch (e) {
+        yield UsersLoadErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UserUpdate) {
+      yield LoadingState();
+      try {
+        await authRepo.updateUser(event.auth);
+        yield UserUpdateSucessState();
+      } catch (e) {
+        yield UserSelfUpdateErrorState(message: '${e.message}');
+      }
+    }
+    if (event is UserSelfUpdate) {
+      yield LoadingState();
+      try {
+        await authRepo.updateSelf(event.auth);
+        yield UserSelfUpdateSucessState();
+      } catch (e) {
+        yield UserSelfUpdateErrorState(message: '${e.message}');
       }
     }
   }

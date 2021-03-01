@@ -1,9 +1,13 @@
+import 'package:addis_teller_app/auth/bloc/bloc.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
+import 'package:addis_teller_app/auth/screens/profile.dart';
+import 'package:addis_teller_app/auth/screens/user_list.dart';
 import 'package:addis_teller_app/post/bloc/post_bloc.dart';
 import 'package:addis_teller_app/post/bloc/post_event.dart';
 import 'package:addis_teller_app/station/screens/station_detail.dart';
 import 'package:addis_teller_app/station/station.dart';
 import 'package:addis_teller_app/station/widgets/createAndUpdate.dart';
+import 'package:addis_teller_app/station/widgets/drawer.dart';
 import 'package:addis_teller_app/station/widgets/nearbyCarousel.dart';
 import 'package:addis_teller_app/station/widgets/search.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +94,6 @@ class _HomepageState extends State<Homepage> {
                           ),
                           // ),
                         ),
-<<<<<<< HEAD
                         ListTile(
                           onTap: () async {
                             SharedPreferences pref =
@@ -119,32 +122,6 @@ class _HomepageState extends State<Homepage> {
                               }),
                         ),
                       ],
-=======
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () async {
-                        SharedPreferences pref =
-                            await SharedPreferences.getInstance();
-                        userID = pref.getString("id");
-                        BlocProvider.of<PostBloc>(context).add(
-                            StationPostLoad(stationID: stations[index].id));
-                        Navigator.pushNamed(context, StationDetail.routeName,
-                            arguments: stations[index]);
-                      },
-                      title: Text('${stations[index].name}'),
-                      subtitle: Text('${stations[index].latLong}'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.update),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => AddAndUpdateField(
-                                      edit: true,
-                                      station: stations[index],
-                                    ));
-                          }),
->>>>>>> b96b5064529db5d80a9c6809a407c595c8a79ae9
                     ),
                   ),
                 );
@@ -176,6 +153,7 @@ class _HomepageState extends State<Homepage> {
         },
         child: Icon(Icons.add),
       ),
+      drawer: Navigation_Drawer(),
     );
   }
 }

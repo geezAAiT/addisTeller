@@ -45,3 +45,22 @@ class NearbyOperationFailure extends StationState {
   @override
   List<Object> get props => [message];
 }
+
+class SearchingState extends StationState {}
+
+class SearchSuccessState extends StationState {
+  final List<Station> stations;
+
+  SearchSuccessState([this.stations = const []]);
+
+  @override
+  List<Object> get props => [stations];
+}
+
+class SearchFailureState extends StationState {
+  final String message;
+  SearchFailureState({this.message});
+
+  @override
+  List<Object> get props => [message];
+}

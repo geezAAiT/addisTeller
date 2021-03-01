@@ -1,8 +1,7 @@
 import 'package:addis_teller_app/auth/screens/login.dart';
-<<<<<<< HEAD
+import 'package:addis_teller_app/auth/screens/profile.dart';
 import 'package:addis_teller_app/auth/screens/register.dart';
-=======
->>>>>>> b96b5064529db5d80a9c6809a407c595c8a79ae9
+import 'package:addis_teller_app/auth/screens/user_list.dart';
 import 'package:addis_teller_app/multi.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/screens/station_detail.dart';
@@ -19,6 +18,12 @@ class StationAppRoute {
     }
     if (settings.name == Register.routeName) {
       return MaterialPageRoute(builder: (context) => Register());
+    }
+    if (settings.name == Profile.routeName) {
+      return MaterialPageRoute(builder: (context) => Profile());
+    }
+    if (settings.name == UserList.routeName) {
+      return MaterialPageRoute(builder: (context) => UserList());
     }
 
     if (settings.name == StationDetail.routeName) {

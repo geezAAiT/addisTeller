@@ -10,7 +10,7 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final msg = BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is LoginLoadingState)
+      if (state is LoadingState)
         return Center(
           child: CircularProgressIndicator(),
         );

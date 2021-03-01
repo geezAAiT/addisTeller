@@ -62,5 +62,14 @@ class StationBloc extends Bloc<StationEvent, StationState> {
         yield NearbyOperationFailure(message: '$e');
       }
     }
+    if (event is StationSearch) {
+      yield SearchingState();
+      try {
+        final stations = await stationRepository.searchStation(event.search);
+        yield SearchSuccessState(stations);
+      } catch (e) {
+        yield SearchFailureState(message: '$e');
+      }
+    }
   }
 }
