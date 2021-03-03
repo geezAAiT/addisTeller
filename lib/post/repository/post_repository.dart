@@ -6,8 +6,8 @@ class PostRepository {
 
   PostRepository({@required this.postProvider}) : assert(postProvider != null);
 
-  Future<Post> createPost(Post post, String StationID) async {
-    return await postProvider.createPost(post, StationID);
+  Future<Post> createPost(Post post, String stationID) async {
+    return await postProvider.createPost(post, stationID);
   }
 
   Future<List<Post>> getPosts() async {

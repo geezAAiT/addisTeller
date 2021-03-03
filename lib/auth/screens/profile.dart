@@ -16,22 +16,21 @@ class Profile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is AdminLoginSucessState) {
-              final auth = state.auth;
-              return UpdateForm(
-                auth: auth,
-                update: true,
-                adminOnly: false,
-              );
+            if (state is LoggedInUserSuccessState) {
+              final auth = state.user;
+              return auth.isAdmin
+                  ? UpdateForm(
+                      auth: auth,
+                      update: true,
+                      adminOnly: true,
+                    )
+                  : UpdateForm(
+                      auth: auth,
+                      update: true,
+                      adminOnly: false,
+                    );
             }
-            if (state is UserLoginSucessState) {
-              final auth = state.auth;
-              return UpdateForm(
-                auth: auth,
-                update: true,
-                adminOnly: false,
-              );
-            }
+            return CircularProgressIndicator();
           },
         ),
       ),

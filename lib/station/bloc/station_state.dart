@@ -49,7 +49,7 @@ class NearbyOperationFailure extends StationState {
 class SearchingState extends StationState {}
 
 class SearchSuccessState extends StationState {
-  final List<Station> stations;
+  final List<StationFromSearch> stations;
 
   SearchSuccessState([this.stations = const []]);
 

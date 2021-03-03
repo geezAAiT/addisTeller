@@ -1,7 +1,6 @@
 import 'package:addis_teller_app/auth/auth.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/auth/widgets/form.dart';
-import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +24,7 @@ class Register extends StatelessWidget {
           if (state is UserRegisterSucessState)
             Navigator.pushNamedAndRemoveUntil(
                 context, Login.routeName, (route) => false);
-          if (state is RegisterErrorState) {
+          if (state is AuthFailureState) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('${state.message}')));
           }

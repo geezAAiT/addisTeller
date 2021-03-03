@@ -3,6 +3,7 @@ import 'package:addis_teller_app/station/bloc/station_state.dart';
 import 'package:addis_teller_app/station/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NearbyCarousel extends StatelessWidget {
   @override
@@ -52,15 +53,15 @@ class NearbyCarousel extends StatelessWidget {
                       },
                       child: Container(
                         margin: EdgeInsets.all(10.0),
-                        width: 150,
+                        width: 170,
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: [
                             Positioned(
-                              bottom: 10.0,
+                              bottom: 14.0,
                               child: Container(
                                 height: 95.0,
-                                width: 145.0,
+                                width: 160.0,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
@@ -81,13 +82,23 @@ class NearbyCarousel extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(height: 4),
-                                      Text(
-                                        nearby.station["latLong"],
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 9,
+                                      Row(children: [
+                                        Icon(
+                                          FontAwesomeIcons.locationArrow,
+                                          size: 13,
+                                          color: Colors.blue,
                                         ),
-                                      ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          "${nearby.distance} kms away",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                          ),
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ]),
                                     ],
                                   ),
                                 ),
@@ -112,9 +123,10 @@ class NearbyCarousel extends StatelessWidget {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: Image(
-                                        image: AssetImage("images/hotel0.jpg"),
+                                        image: AssetImage(
+                                            "images/${nearbys[index].station["name"]}.jpg"),
                                         height: 125,
-                                        width: 135,
+                                        width: 145,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -127,9 +139,9 @@ class NearbyCarousel extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${nearby.distance} away',
+                                          nearby.station["name"],
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: 1.2,
@@ -141,13 +153,6 @@ class NearbyCarousel extends StatelessWidget {
                                               Icons.location_disabled,
                                               color: Colors.white,
                                               size: 8,
-                                            ),
-                                            SizedBox(width: 5),
-                                            Text(
-                                              'destination.country',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 11),
                                             ),
                                           ],
                                         ),

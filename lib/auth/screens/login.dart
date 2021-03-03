@@ -2,7 +2,6 @@ import 'package:addis_teller_app/auth/auth.dart';
 import 'package:addis_teller_app/auth/screens/register.dart';
 import 'package:addis_teller_app/auth/widgets/form.dart';
 import 'package:addis_teller_app/station/screens/admin_homepage.dart';
-import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/screens/user_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,16 +82,12 @@ class Login extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is UserLoginSucessState)
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => UserPage()),
-                (route) => false);
+            Navigator.pushNamedAndRemoveUntil(
+                context, UserPage.routeName, (route) => false);
           if (state is AdminLoginSucessState)
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => AdminHomepage()),
-                (route) => false);
-          if (state is LoginErrorState) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, AdminHomepage.routeName, (route) => false);
+          if (state is AuthFailureState) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('${state.message}')));
           }

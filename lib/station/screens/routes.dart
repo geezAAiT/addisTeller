@@ -1,8 +1,9 @@
+import 'package:addis_teller_app/auth/auth.dart';
 import 'package:addis_teller_app/auth/screens/login.dart';
 import 'package:addis_teller_app/auth/screens/profile.dart';
 import 'package:addis_teller_app/auth/screens/register.dart';
 import 'package:addis_teller_app/auth/screens/user_list.dart';
-import 'package:addis_teller_app/multi.dart';
+import 'package:addis_teller_app/post/screens/post_list.dart';
 import 'package:addis_teller_app/station/screens/admin_homepage.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/screens/station_detail.dart';
@@ -30,6 +31,9 @@ class StationAppRoute {
     }
     if (settings.name == UserList.routeName) {
       return MaterialPageRoute(builder: (context) => UserList());
+    }
+    if (settings.name == PostList.routeName) {
+      return MaterialPageRoute(builder: (context) => PostList());
     }
 
     if (settings.name == StationDetail.routeName) {

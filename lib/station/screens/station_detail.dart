@@ -1,12 +1,10 @@
-import 'package:addis_teller_app/main.dart';
-import 'package:addis_teller_app/post/bloc/bloc.dart';
-import 'package:addis_teller_app/post/post.dart';
+import 'package:addis_teller_app/auth/auth.dart';
 import 'package:addis_teller_app/station/screens/admin_homepage.dart';
 import 'package:addis_teller_app/station/screens/homepage.dart';
 import 'package:addis_teller_app/station/station.dart';
+import 'package:addis_teller_app/station/widgets/post_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StationDetail extends StatefulWidget {
   StationDetail({this.station});
@@ -19,8 +17,6 @@ class StationDetail extends StatefulWidget {
 
 class _StationDetailState extends State<StationDetail>
     with SingleTickerProviderStateMixin {
-  final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> post = {};
   final _kTabs = <Tab>[
     const Tab(
         icon: Icon(
@@ -46,8 +42,6 @@ class _StationDetailState extends State<StationDetail>
     tabController.dispose();
     super.dispose();
   }
-
-  TextEditingController editingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +74,8 @@ class _StationDetailState extends State<StationDetail>
                         bottomRight: Radius.circular(30.0),
                       ),
                       child: Image(
-                        image: AssetImage('images/hotel0.jpg'),
+                        image: AssetImage(
+                            'images/${this.widget.station.name}.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -98,26 +93,29 @@ class _StationDetailState extends State<StationDetail>
                           color: Colors.black,
                           onPressed: () => Navigator.pop(context),
                         ),
-                        Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.search),
-                              iconSize: 30.0,
-                              color: Colors.black,
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              iconSize: 25.0,
-                              color: Colors.black,
-                              onPressed: () {
-                                BlocProvider.of<StationBloc>(context)
-                                    .add(StationDelete(this.widget.station));
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    AdminHomepage.routeName, (route) => false);
-                              },
-                            ),
-                          ],
+                        BlocBuilder<AuthBloc, AuthState>(
+                          builder: (context, state) {
+                            if (state is LoggedInUserSuccessState) {
+                              final user = state.user;
+                              return user.isAdmin
+                                  ? IconButton(
+                                      icon: Icon(Icons.delete),
+                                      iconSize: 25.0,
+                                      color: Colors.black,
+                                      onPressed: () {
+                                        BlocProvider.of<StationBloc>(context)
+                                            .add(StationDelete(
+                                                this.widget.station));
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                                AdminHomepage.routeName,
+                                                (route) => false);
+                                      },
+                                    )
+                                  : SizedBox.shrink();
+                            }
+                            return SizedBox.shrink();
+                          },
                         ),
                       ],
                     ),
@@ -137,23 +135,12 @@ class _StationDetailState extends State<StationDetail>
                             letterSpacing: 1.2,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              widget.station.latLong,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Icon(
-                              Icons.location_city,
-                              size: 20.0,
-                              color: Colors.black,
-                            ),
-                            // SizedBox(width: 5.0),
-                          ],
+                        Text(
+                          widget.station.latLong,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0,
+                          ),
                         ),
                       ],
                     ),
@@ -163,8 +150,8 @@ class _StationDetailState extends State<StationDetail>
                     bottom: 20.0,
                     child: Icon(
                       Icons.location_on,
-                      color: Colors.white70,
-                      size: 20.0,
+                      color: Colors.purple,
+                      size: 30.0,
                     ),
                   ),
                 ],
@@ -179,7 +166,7 @@ class _StationDetailState extends State<StationDetail>
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
-                          height: 150.0,
+                          height: 120.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -233,43 +220,6 @@ class _StationDetailState extends State<StationDetail>
                                   ),
                                 ),
                                 SizedBox(height: 10.0),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.all(5.0),
-                                      width: 65.0,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).accentColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        'lorem ipsum',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Container(
-                                      padding: EdgeInsets.all(5.0),
-                                      width: 65.0,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).accentColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "lorem",
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
@@ -282,11 +232,11 @@ class _StationDetailState extends State<StationDetail>
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image(
                               width: 90.0,
-                              height: 40,
+                              // height: 50,
                               image: AssetImage(
-                                'images/hotel1.jpg',
+                                'images/${childStation["name"]}.jpg',
                               ),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                             ),
                           ),
                         ),
@@ -297,150 +247,16 @@ class _StationDetailState extends State<StationDetail>
               ),
             ],
           ),
-          SafeArea(
-            child: Column(
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                          autofocus: false,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Write station\'s status';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(labelText: 'body'),
-                          onSaved: (value) {
-                            setState(() {
-                              post["body"] = value;
-                            });
-                          }),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          final form = _formKey.currentState;
-                          if (form.validate()) {
-                            form.save();
-                            final PostEvent event = PostCreate(
-                                Post(
-                                  body: post["body"],
-                                ),
-                                this.widget.station.id);
-
-                            BlocProvider.of<PostBloc>(context).add(event);
-                          }
-                        },
-                        label: Text('post'),
-                        icon: Icon(Icons.post_add),
-                      ),
-                    ],
-                  ),
-                ),
-                BlocBuilder<PostBloc, PostState>(builder: (context, state) {
-                  if (state is PostLoading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is StationPostsLoadSuccess) {
-                    final posts = state.stationPosts;
-                    print("ther user id is $userID");
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: posts.length,
-                      itemBuilder: (context, index) => ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          child: Icon(Icons.picture_in_picture_outlined),
-                        ),
-                        title: Text("${posts[index].user["name"]}"),
-                        subtitle: Text("${posts[index].body}"),
-                        trailing: posts[index].user["_id"] == userID
-                            ? PopupMenuButton(
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              BlocProvider.of<PostBloc>(context)
-                                                  .add(PostDelete(
-                                                      post: posts[index],
-                                                      stationID: this
-                                                          .widget
-                                                          .station
-                                                          .id));
-                                            },
-                                            child: Text("delete"))),
-                                    PopupMenuItem(
-                                        child: GestureDetector(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (context) => Column(
-                                                  children: [
-                                                    TextFormField(
-                                                        autofocus: false,
-                                                        initialValue:
-                                                            posts[index].body,
-                                                        validator: (value) {
-                                                          if (value.isEmpty) {
-                                                            return 'Write station\'s status';
-                                                          }
-                                                          return null;
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                                labelText:
-                                                                    'body'),
-                                                        onSaved: (value) {
-                                                          setState(() {
-                                                            post["body"] =
-                                                                value;
-                                                          });
-                                                        }),
-                                                    ElevatedButton.icon(
-                                                      onPressed: () {
-                                                        final form = _formKey
-                                                            .currentState;
-                                                        if (form.validate()) {
-                                                          form.save();
-                                                          final PostEvent
-                                                              event =
-                                                              PostUpdate(
-                                                            Post(
-                                                                body: post[
-                                                                    "body"],
-                                                                id: posts[index]
-                                                                    .id),
-                                                          );
-
-                                                          BlocProvider.of<
-                                                                      PostBloc>(
-                                                                  context)
-                                                              .add(event);
-                                                        }
-                                                      },
-                                                      label:
-                                                          Text('update post'),
-                                                      icon: Icon(Icons.update),
-                                                    ),
-                                                  ],
-                                                ));
-                                      },
-                                      child: Text("edit"),
-                                    ))
-                                  ];
-                                },
-                              )
-                            : SizedBox.shrink(),
-                      ),
-                    );
-                  } else if (state is PostOperationFailure) {
-                    return Text(state.message);
-                  }
-                }),
-              ],
-            ),
-          )
+          BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+            if (state is LoggedInUserSuccessState) {
+              return PostTab(
+                station: this.widget.station,
+                userID: userID,
+                isAdmin: state.user.isAdmin,
+              );
+            }
+            return Container();
+          })
         ],
       ),
       bottomNavigationBar: Material(
